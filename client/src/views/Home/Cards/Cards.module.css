@@ -1,0 +1,38 @@
+.card{
+    border: 2px solid black;
+    width: 285px;
+    height: 285px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 3px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    background-color: yellow;
+}
+
+.img {
+    height: 180px;
+    width: 240px;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.types {
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding-bottom: 9px;
+}
+
+.type{
+    margin-right: 5px;
+}
