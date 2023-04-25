@@ -21,38 +21,46 @@ const pokemonFilterForApi = (arr) => arr.map((pokemon) => {
 });
 
 const createPokemon = async (
-        name,
-        height,
-        weight,
-        hp,
-        image,
-        attack,
-        defense,
-        speed,
-        TypeIds
-    ) => {
-    const newPokemon = await Pokemon.create({
-        name,
-        height,
-        weight,
-        hp,
-        image,
-        attack,
-        defense,
-        speed,
-    });
-    await newPokemon.setTypes(TypeIds);
-    const types = await newPokemon.getTypes();
+  name,
+  height,
+  weight,
+  hp,
+  image,
+  attack,
+  defense,
+  speed,
+  TypeIds
+) => {
+  const newPokemon = await Pokemon.create({
+    name,
+    height,
+    weight,
+    hp,
+    image,
+    attack,
+    defense,
+    speed,
+  });
+  await newPokemon.addTypes(TypeIds);
 
-    return {
-        ...newPokemon.toJSON(),
-        types: types.map((type) => type.name),
-    };
+  const createdPokemon = await Pokemon.findByPk(newPokemon.id, {
+    include: {
+      model: Type,
+      as: "types",
+    },
+  });
+  return createdPokemon;
 };
 
 const getAllPokemons = async () => {
 
-    const dataBasePokemons = await Pokemon.findAll();
+    const dataBasePokemons = await Pokemon.findAll({
+      include: {
+        model: Type,
+        as: "types",
+        attributes: ["name"],
+      },
+    });
 
     const apiPokemonsRaw = (
         await axios(`${API_URL}/pokemon?limit=20`)
@@ -74,18 +82,16 @@ const getAllPokemons = async () => {
 
 const getPokemonById = async (id, source) => {
     const pokemon =
-        source === 'api'
-            ? (
-                await axios(`${API_URL}/pokemon/${id}`)
-            ).data
-            : await Pokemon.findByPk(id, {
-                include: {
-                    model: Type,
-                },
-            });
-    
-    console.log(pokemon);
-    return pokemonFilterForApi([pokemon]);
+      source === "api"
+        ? (await axios(`${API_URL}/pokemon/${id}`)).data
+        : await Pokemon.findByPk(id, {
+            include: {
+              model: Type,
+              as: "types",
+            },
+          });
+
+  return source === "api" ? pokemonFilterForApi([pokemon]) : pokemon;
 };
 
 const getPokemonByName = async (name) => {

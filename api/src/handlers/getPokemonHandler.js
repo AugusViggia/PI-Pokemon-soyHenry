@@ -1,5 +1,7 @@
 const { getAllPokemons, getPokemonById, getPokemonByName, createPokemon } = require('../controllers/pokemonController');
 
+const { Pokemon } = require("../db");
+
 const OK = 200;
 const err = 400;
 
@@ -20,6 +22,7 @@ const getPokemonByIdHandler = async (req, res) => {
         res.status(OK).send(pokemon);
     } catch (error) {
         res.status(err).json({ error: error.message });
+        console.log(error);
     }
 };
 
@@ -54,6 +57,7 @@ const postPokemonHandler = async (req, res) => {
         res.status(200).json({ newPokemon });
     } catch (error) {
         res.status(400).json({ error: error.message });
+        console.log(error);
     }
 };
 
@@ -62,4 +66,4 @@ module.exports = {
     getPokemonByIdHandler,
     getPokemonByNameHandler,
     postPokemonHandler
-}
+};
