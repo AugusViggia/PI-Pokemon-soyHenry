@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypes, filterByTypes, filterByOrigin, setOrder, getPokemons} from "../../../redux/actions";
-
+import style from './Filter.module.css';
 
 const Filter = () => {
     const pokemonTypes = useSelector((state) => state.types);
@@ -47,40 +47,42 @@ const Filter = () => {
     }
 
     return (
-        <div>
-            <div>
-                <label htmlFor="type">Filter by Type: </label>
-                <select defaultValue={filter} onChange={handleChange}>
+        <div className={style.filterContainer}>
+            <div className={style.filter}>
+                <label htmlFor="type" className={style.typeFilter}>Filter by Type: </label>
+                <select defaultValue={filter} onChange={handleChange} className={style.select}>
                     <option value="all">--</option>
                     {pokemonTypes?.map(type => {
                         return <option
                             value={type.name}
-                            key={type.id}>
+                            key={type.id}
+                            className={style.option}>
                             {type.name}</option>
                     })}
                 </select>
             </div>
-            <div>
-                <label htmlFor="origin">Filter by Origin: </label>
-                <select defaultValue={origin} onChange={handleOrigin}>
-                    <option value='all'>--</option>
-                    <option value='data base'>Data Base</option>
-                    <option value='api'>API</option>
+            <div className={style.filter}>
+                <label htmlFor="origin" className={style.originFilter}>Filter by Origin: </label>
+                <select defaultValue={origin} onChange={handleOrigin} className={style.select}>
+                    <option value='all' className={style.option}>--</option>
+                    <option value='data base' className={style.option}>Data Base</option>
+                    <option value='api' className={style.option}>API</option>
                 </select>
             </div>
-            <div>
-                <label htmlFor="sort">Sort by: </label>
-                <select defaultValue='all' onChange={handleOrder}>
-                    <option value="all">--</option>
-                    <option value="name-asc">Name ▲</option>
-                    <option value="name-desc">Name ▼</option>
+            <div className={style.filter}> 
+                <label htmlFor="sort" className={style.orderFilter}>Sort by Name: </label>
+                <select defaultValue='all' onChange={handleOrder} className={style.select}>
+                    <option value="all" className={style.option}>--</option>
+                    <option value="name-asc" className={style.option}>Name ▲</option>
+                    <option value="name-desc" className={style.option}>Name ▼</option>
                 </select>
             </div>
-            <div>
-                <select defaultValue='all' onChange={handleAttack}>
-                    <option value="all">--</option>
-                    <option value="attack-asc">Attack ▲</option>
-                    <option value="attack-desc">Attack ▼</option>
+            <div className={style.filter}>
+                <label htmlFor="sort" className={style.attackFilter}>Sort by Attack: </label>
+                <select defaultValue='all' onChange={handleAttack} className={style.select}>
+                    <option value="all" className={style.option}>--</option>
+                    <option value="attack-asc" className={style.option}>Attack ▲</option>
+                    <option value="attack-desc" className={style.option}>Attack ▼</option>
                 </select>
             </div>
         </div>

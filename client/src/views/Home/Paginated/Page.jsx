@@ -1,4 +1,5 @@
 import React from "react";
+import style from './Page.module.css';
 
 const Page = ({charactersPerPage, pokemons, paginated}) => {
     const pageNumbers = [];
@@ -9,7 +10,7 @@ const Page = ({charactersPerPage, pokemons, paginated}) => {
 
     return (
         <nav>
-            <ul className="{style.paginado}">
+            <ul className={style.paginado}>
                 {
                     pageNumbers &&
                     pageNumbers.map(number => (

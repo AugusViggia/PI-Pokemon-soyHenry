@@ -15,7 +15,7 @@ const Card = ({ id, image, name, types, attack }) => {
                 <p className={style.name}>{name}</p>
             </div>
             <div className={style.containerTypes}>
-                {types?.map(type => {return <div  className='{styles.type}'>{typeof type === 'object' ? type.name : type}</div>})} 
+                {types?.map(type => {return <div  className={style.type}>{typeof type === 'object' ? type.name : type}</div>})} 
             </div>
             <div>
             </div>

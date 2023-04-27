@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    height: 100vh;
+    background-color: #EA2027;
+    overflow: hidden;
+}
+
+.buttonDiv{
+    width: 50px;
+    text-align: center;
+    margin-left: 40px;
+    margin-top: 20px;
+    background-color: #1B9CFC;
+    box-shadow: 2px 2px 2px 2px #57606f;
+    border-radius: 5px;
+}
+
+.button{
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.buttonDiv:hover {
+    background-color: #f9ca24;
+}
+
+.wrapper{
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        justify-content: center;
+        align-self: center;
+        margin-top: 20px;
+        background-color: #f9ca24;
+        border: 3px solid #ccc;
+        border-radius: 3px;
+        box-shadow: 1px 1px 2px 3px black;
+}
+
+.infoDiv{
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.nameDiv{
+    font-size: 30px;
+    margin-left: 10px;
+    font-weight: bold;
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.imageDiv {
+    margin-left: 10px;
+    margin-right: 5px;
+    width: 300px;
+    height: 250px;
+    align-self: center;
+    align-content: center;
+    background-color: #f5f6fa;
+    border-radius: 3px;
+    box-shadow: 3px 2px 3px 4px #333;
+    margin-bottom: 10px;
+}
+
+.image{
+    width: 300px;
+    height: 250px;
+    align-self: center;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    background-color: #f5f6fa;
+    box-shadow: 3px 2px 3px 4px #333;
+    border-radius: 3px;
+}
+
+.label {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.value {
+    margin-bottom: 2px;
+}
+
+.types{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    background-color: #f5f6fa;
+    box-shadow: 3px 2px 3px 4px #333;
+    border-radius: 3px;
+}
+
+.type {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-radius: 20px;
+}
+
+.typeList{
+    align-items: center;
+}

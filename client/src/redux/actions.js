@@ -9,6 +9,7 @@ export const FILTER_BY_TYPES = 'FILTER_BY_TYPES';
 export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
 export const SET_ATTACK = "SET_ATTACK";
+export const SET_LOADING = "SET_LOADING";
 
 export const getPokemons = () => {
   return async function (dispatch) {
@@ -81,4 +82,9 @@ export const setAttack = (setOrder) => {
       type: SET_ATTACK, payload: setOrder
     })
   }
-}
+};
+
+export const setLoading = (value) => ({
+  type: SET_LOADING,
+  payload: value,
+});

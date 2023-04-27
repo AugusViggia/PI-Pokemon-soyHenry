@@ -8,7 +8,6 @@ import CreatePokemon from './views/Form/Form';
 function App() {
   return (
     <div className="App">
-      <h1>Henry Pokemon</h1>
       <Route exact path="/"
         render={() => <Landing/>} />
       <Route exact path="/home"

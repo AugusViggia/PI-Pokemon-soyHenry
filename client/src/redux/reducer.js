@@ -6,7 +6,8 @@ import {
   FILTER_BY_TYPES,
   FILTER_BY_ORIGIN,
   SET_ORDER_BY_NAME,
-  SET_ATTACK
+  SET_ATTACK,
+  SET_LOADING
 } from "./actions";
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
   filterByOrigin: 'all',
   orderByName: "all",
   orderByAttack: "all",
-  order:"asc"
+  order: "asc",
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +28,7 @@ const reducer = (state = initialState, action) => {
             return {
               ...state,
               pokemons: action.payload,
+              loading: false,
             };
 
           case GET_DETAILS:
@@ -65,18 +68,24 @@ const reducer = (state = initialState, action) => {
               orderByName: action.payload.orderByName,
               order: action.payload.order,
             };
-          
+
           case SET_ATTACK:
             return {
               ...state,
               orderByAttack: action.payload.orderByAttack,
-              order: action.payload.order
-            }
+              order: action.payload.order,
+            };
 
           case FILTER_BY_ORIGIN:
             return {
               ...state,
               filterByOrigin: action.payload,
+            };
+          
+          case SET_LOADING: 
+            return {
+              ...state,
+              loading: action.payload,
             };
 
           default:

@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 
 const Landing = () => {
 
-    console.log('cualquier cosa');
-
     return (
-        <div className='{style.container}'>
-            <div className='{style.title}'>
-                <h1>Estas En Landing Page</h1>
+        <div className={style.container}>
+            <div className={style.title}>
+                <h1>POKEMON APP</h1>
             </div>
-            <div className='{style.linkList}'>
-                <Link className='{style.button}' to='/home'>HOME</Link>
+            <div className={style.linkList}>
+                <Link className={style.button} to='/home'>POKEDEX</Link>
             </div>
         </div>
     )

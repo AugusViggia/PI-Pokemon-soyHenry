@@ -6,21 +6,28 @@ import style from './CardsContainer.module.css';
 
 const CardsContainer = () => {
   const pokemons = useSelector(state => state.pokemons);
+
   const filterByType = useSelector(state => state.filterByType);
   const filterByOrigin = useSelector(state => state.filterByOrigin);
   const orderByName = useSelector((state) => state.orderByName);
   const orderByAttack = useSelector((state) => state.orderByAttack);
   const order = useSelector((state) => state.order);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [charactersPerPage, setcharactersPerPage] = useState(12);
   const indexOfLastCharacter = currentPage * charactersPerPage;
   const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
   
+  const paginated = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  };
+
 const filteredPokemons = pokemons.filter(pokemon => {
   if (filterByType === 'all') {
     return true;
   } else {
-    return pokemon.types?.some(type => type.name === filterByType);
+    const types = [...pokemon.types, ...pokemon.types.map(type => type.name)];
+    return types.includes(filterByType);
   }
 });
 
@@ -56,23 +63,22 @@ const filteredPokemons = pokemons.filter(pokemon => {
     } else {
       return 0;
     }
-  })
+  });
 
   const currentCharacters = sortedByAttack.slice(indexOfFirstCharacter, indexOfLastCharacter);
-  
-  const paginated = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  };
 
   return (
-    <div className={style.cardContainer}>
-      <Page charactersPerPage={charactersPerPage}
+    <div className={style.cardsContainer}>
+      <div className={style.pageDiv}>
+        <Page charactersPerPage={charactersPerPage}
               pokemons={pokemons.length}
               paginated={paginated}
-          />
+        />
+      </div>
+      <div className={style.cards}>
           {currentCharacters?.map(pokemon => {
               return (
-                  <div key={pokemon.id}>
+                  <div key={pokemon.id} className={style.cardDiv}>
                       <Card
                           key={pokemon.id}
                           id={pokemon.id}
@@ -84,6 +90,7 @@ const filteredPokemons = pokemons.filter(pokemon => {
                   </div>
               )
           })}
+      </div>
     </div>
   )
 };

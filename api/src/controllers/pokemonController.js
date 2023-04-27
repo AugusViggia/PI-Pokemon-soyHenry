@@ -20,6 +20,21 @@ const pokemonFilterForApi = (arr) => arr.map((pokemon) => {
     };
 });
 
+const pokemonFilterDb = (arr) => arr.map((pokemon) => {
+  return {
+    id: pokemon.id,
+    name: pokemon.name,
+    height: pokemon.height,
+    weight: pokemon.weight,
+    hp: pokemon.hp,
+    image: pokemon.image,
+    attack: pokemon.attack,
+    defense: pokemon.defense,
+    speed: pokemon.speed,
+    types: pokemon.types.map(type => type.name)
+  };
+})
+
 const createPokemon = async (
   name,
   height,
@@ -63,7 +78,7 @@ const getAllPokemons = async () => {
     });
 
     const apiPokemonsRaw = (
-        await axios(`${API_URL}/pokemon?limit=40`)
+        await axios(`${API_URL}/pokemon?limit=80`)
     );
 
     const pokemonUrls = apiPokemonsRaw.data?.results.map(
@@ -77,7 +92,9 @@ const getAllPokemons = async () => {
 
     const apiPokemons = pokemonFilterForApi(pokemonData); // le filtras la info de la API
 
-    return [...dataBasePokemons, ...apiPokemons];
+    const dataBaseFiltered = pokemonFilterDb(dataBasePokemons);
+
+    return [...dataBaseFiltered, ...apiPokemons];
 };
 
 const getPokemonById = async (id, source) => {

@@ -3,6 +3,7 @@ import { getTypes } from "../../redux/actions";
 import { useState, useEffect } from "react";  
 import axios from "axios";
 import { Link } from "react-router-dom";
+import style from './Form.module.css';
 
 
 const CreatePokemon = () => {
@@ -114,11 +115,13 @@ const CreatePokemon = () => {
     
     
     return (
-        <div className="container">
-            <Link to="/home" className='{styles.buttonBack}'>HOME</Link>
-            <form onSubmit={handleSubmit}>
-                <h3>FORM</h3>
-                <div className="form-group">
+        <div className={style.container}>
+            <div className={style.buttonDiv}>
+                <Link to="/home" className={style.buttonBack}>BACK</Link>
+            </div>
+            <form onSubmit={handleSubmit} className={style.form}>
+                <h3 className={style.title}>POKEMON CREATOR</h3>
+                <div className={style.formGroup}>
                     <label htmlFor="name">Name:</label>
                     <input
                         type="text"
@@ -128,9 +131,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.name ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.name}</span>
+                    <span className={style.invalidFeedback}>{error.name}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="image">Image:</label>
                     <input
                         type="text"
@@ -140,9 +143,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.image ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.image}</span>
+                    <span className={style.invalidFeedback}>{error.image}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="hp">Hp:</label>
                     <input
                         type="number"
@@ -154,9 +157,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.hp ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.hp}</span>
+                    <span className={style.invalidFeedback}>{error.hp}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="height">Height:</label>
                     <input
                         type="number"
@@ -168,9 +171,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.height ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.height}</span>
+                    <span className={style.invalidFeedback}>{error.height}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="weight">Weight:</label>
                     <input
                         type="number"
@@ -182,9 +185,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.weight ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.weight}</span>
+                    <span className={style.invalidFeedback}>{error.weight}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="attack">Attack:</label>
                     <input
                         type="number"
@@ -196,9 +199,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.attack ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.attack}</span>
+                    <span className={style.invalidFeedback}>{error.attack}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="defense">Defense:</label>
                     <input
                         type="number"
@@ -210,9 +213,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.defense ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.defense}</span>
+                    <span className={style.invalidFeedback}>{error.defense}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="speed">Speed:</label>
                     <input
                         type="number"
@@ -224,9 +227,9 @@ const CreatePokemon = () => {
                         onChange={handleChange}
                         className={error.speed ? 'form-control is-invalid' : 'form-control'}
                         />
-                    <span className="invalid-feedback">{error.speed}</span>
+                    <span className={style.invalidFeedback}>{error.speed}</span>
                 </div>
-                <div className="form-group">
+                <div className={style.formGroup}>
                     <label htmlFor="types">Types:</label>
                     {types?.map((type) => {
                         return (
@@ -244,7 +247,7 @@ const CreatePokemon = () => {
                             </div>
                         );
                     })}
-                    <div className="invalid-feedback">{error.types}</div>
+                    <div className={style.invalidFeedback}>{error.types}</div>
                 </div>
                     <button type="submit" onClick={handleSubmit}>
                         CREATE POKEMON
