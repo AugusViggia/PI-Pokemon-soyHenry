@@ -47,11 +47,6 @@ const CreatePokemon = () => {
         if (!input.image) {
             errors.image = 'Image is required';
         }
-        if (!input.types || input.types.length === 0) {
-            errors.types = 'Select at least one Pokemon type';
-        } else if (input.types.length > 2) {
-            errors.types = 'No more than two types are allowed';
-        }
         if (input.hp < 0 || input.hp > 200) {
             errors.hp = 'HP must be between 1 and 200';
         }
@@ -70,10 +65,15 @@ const CreatePokemon = () => {
         if (input.speed < 0 || input.speed > 200) {
             errors.speed = 'Speed must be between 1 and 200';
         }
+        if (input.types.length === 0) {
+            errors.types = 'Select at least one Pokemon type';
+        } else {
+            errors.types = '';
+        }
         setError(errors);
         return Object.keys(errors).length === 0;
     };
-
+    
     const handleChange = (event) => {
         setInput({
             ...input,
@@ -84,23 +84,23 @@ const CreatePokemon = () => {
             [event.target.name]: event.target.value
         })
     };
-
+    
     const handleCheck = (event) => {
-    const selectedType = parseInt(event.target.value);
-    const checked = event.target.checked;
-
-    if (checked && selectedTypes.length < 2) {
-        setSelectedTypes(prevSelectedTypes => [...prevSelectedTypes, selectedType]);
-    } else {
-        setSelectedTypes(prevSelectedTypes => prevSelectedTypes.filter(type => type !== selectedType));
-    }
-
-    setInput({
-        ...input,
-        types: checked ? [...selectedTypes, selectedType] : selectedTypes.filter(type => type !== selectedType)
-    });
+        const selectedType = parseInt(event.target.value);
+        const checked = event.target.checked;
+        
+        if (checked && selectedTypes.length < 2) {
+            setSelectedTypes(prevSelectedTypes => [...prevSelectedTypes, selectedType]);
+        } else {
+            setSelectedTypes(prevSelectedTypes => prevSelectedTypes.filter(type => type !== selectedType));
+        }
+        
+        setInput({
+            ...input,
+            types: checked ? [...selectedTypes, selectedType] : selectedTypes.filter(type => type !== selectedType)
+        });
     };
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (input.types.length) {
@@ -111,7 +111,7 @@ const CreatePokemon = () => {
             alert("Seleccione al menos un tipo de pokemon antes de continuar")
         }
     };
-
+    
     
     return (
         <div className="container">
@@ -256,7 +256,8 @@ const CreatePokemon = () => {
 
 export default CreatePokemon;
 
-//{allFieldsValid() && ()}
+
+// {allFieldsValid() && ()}
 // const allFieldsValid = () => {
 //     return (
 //         input.name !== "" &&
@@ -267,7 +268,9 @@ export default CreatePokemon;
 //         input.height !== 0 &&
 //         input.weight !== 0 &&
 //         input.image !== "" &&
-//         // input.types !== [] &&
+//         selectedTypes.length > 0 && 
+//         input.types.length <= 2 &&
+//         console.log(input.types) &&
 //         error.name === "" &&
 //         error.hp === "" &&
 //         error.attack === "" &&
@@ -275,103 +278,7 @@ export default CreatePokemon;
 //         error.speed === "" &&
 //         error.height === "" &&
 //         error.weight === "" && 
-//         error.image === "" 
-//         // error.types === ""
-//     )
-// };
-
-// const CreatePokemon = () => {
-    //     const [input, setInput] = useState({
-        //         name: '',
-//         image: '',
-//         hp: 0,
-//         height: 0,
-//         weight: 0,
-//         attack: 0,
-//         defense: 0,
-//         speed: 0,
-//         types: []
-//     });
-
-//     const [error, setError] = useState({
-//         name: '',
-//         image: '',
-//         hp: '',
-//         height: '',
-//         weight: '',
-//         attack: '',
-//         defense: '',
-//         speed: '',
-//         types: ''
-//     });
-
-//     const validate = (input) => {
-//         if ((input.name.length < 5).test(input.name)) {
-//             setError({
-//                 ...error,
-//             name:"Name must have at least 4 characters"})
-//             return;
-//         }
-//         setError({
-//             ...error,
-//             name:""
-//         })
-//     };
-
-//     const handleChange = (event) => {
-//         setInput({
-//             ...input,
-//             [event.target.name]: event.target.value
-//         });
-    
-//         validate({
-//             ...input,
-//             [event.target.name]:event.target.value
-//         })
-//     };
-    
-//     return (
-//         <div>
-//             <form onSubmit={""}>
-//                 <div>
-//                     <label name='name' value={input.value} onChange={handleChange}>Name: </label>
-//                     <input />
-//                     <span>{error.name}</span>
-//                 </div>
-//                 <div>
-//                     <label name='image' value={input.value} onChange={handleChange}>Image: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='hp' value={input.value} onChange={handleChange}>Hp: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='height' value={input.value} onChange={handleChange}>Height: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='weight' value={input.value} onChange={handleChange}>Weight: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='attack' value={input.value} onChange={handleChange}>Attack: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='defense' value={input.value} onChange={handleChange}>Defense: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='speed' value={input.value} onChange={handleChange}>Speed: </label>
-//                     <input/>
-//                 </div>
-//                 <div>
-//                     <label name='types' value={input.value} onChange={handleChange}>Types: </label>
-//                     <input/>
-//                 </div>
-//                 {error.name ? null : <button type="submit">CREATE POKEMON</button>}
-//             </form>
-//         </div>
+//         error.image === "" &&
+//         (!error.types || error.types === "")
 //     )
 // };

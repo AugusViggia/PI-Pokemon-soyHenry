@@ -5,7 +5,8 @@ import {
   SEARCH_POKEMON,
   FILTER_BY_TYPES,
   FILTER_BY_ORIGIN,
-  SET_ORDER,
+  SET_ORDER_BY_NAME,
+  SET_ATTACK
 } from "./actions";
 
 const initialState = {
@@ -13,9 +14,10 @@ const initialState = {
   details: [],
   types: [],
   filterByType: "all",
-  filterByOrigin: "all",
-  orderBy: "all",
-  order: "all",
+  filterByOrigin: 'all',
+  orderByName: "all",
+  orderByAttack: "all",
+  order:"asc"
 };
 
 const reducer = (state = initialState, action) => {
@@ -57,50 +59,30 @@ const reducer = (state = initialState, action) => {
               };
             }
 
-          case SET_ORDER:
-            let filterByType = state.filterByType;
-            let filterByOrigin = state.filterByOrigin;
-            // Check if order is being reset to "all"
-            if (action.payload.orderBy === "all") {
-              filterByType = "all";
-              filterByOrigin = "all";
-            }
+          case SET_ORDER_BY_NAME:
             return {
               ...state,
-              orderBy: action.payload.orderBy,
+              orderByName: action.payload.orderByName,
               order: action.payload.order,
-              filterByType,
-              filterByOrigin,
             };
+          
+          case SET_ATTACK:
+            return {
+              ...state,
+              orderByAttack: action.payload.orderByAttack,
+              order: action.payload.order
+            }
 
           case FILTER_BY_ORIGIN:
-            if (action.payload !== "all") {
-              if (action.payload === "data base") {
-                return {
-                  ...state,
-                  filterByOrigin: state.pokemons.filter((pokemon) => {
-                    return pokemon.id >= 1200;
-                  }),
-                };
-              }
-              if (action.payload === "api") {
-                return {
-                  ...state,
-                  filterByOrigin: state.pokemons.filter((pokemon) => {
-                    return pokemon.id < 1200;
-                  }),
-                };
-              } else {
-                return {
-                  ...state,
-                  filterByOrigin: null,
-                };
-              }
-            }
-            break;
+            return {
+              ...state,
+              filterByOrigin: action.payload,
+            };
 
           default:
-            return { ...state };
+            return {
+              ...state,
+            };
         }
 };
 

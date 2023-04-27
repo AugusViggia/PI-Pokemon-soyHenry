@@ -8,52 +8,57 @@ const CardsContainer = () => {
   const pokemons = useSelector(state => state.pokemons);
   const filterByType = useSelector(state => state.filterByType);
   const filterByOrigin = useSelector(state => state.filterByOrigin);
-  const orderBy = useSelector((state) => state.orderBy);
+  const orderByName = useSelector((state) => state.orderByName);
+  const orderByAttack = useSelector((state) => state.orderByAttack);
   const order = useSelector((state) => state.order);
   const [currentPage, setCurrentPage] = useState(1);
   const [charactersPerPage, setcharactersPerPage] = useState(12);
   const indexOfLastCharacter = currentPage * charactersPerPage;
   const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
   
-  const filteredPokemons = pokemons.filter(pokemon => {
-    if (filterByType === 'all') {
-      return true;
-    } else {
-      return pokemon.types?.includes(filterByType);
-    }
-  });
+const filteredPokemons = pokemons.filter(pokemon => {
+  if (filterByType === 'all') {
+    return true;
+  } else {
+    return pokemon.types?.some(type => type.name === filterByType);
+  }
+});
 
   const filteredByOriginPokemons = filterByOrigin === 'all'
-      ? filteredPokemons
-      : filteredPokemons.filter(pokemon => {
-          if (filterByOrigin === 'data base') {
-              return pokemon.id === isNaN(pokemon.id);
-          } else if (filterByOrigin === 'api') {
-              return pokemon.id < 1200;
-          } else {
-              return true;
-          }
-      });
+  ? filteredPokemons
+  : filteredPokemons.filter(pokemon => {
+    if (filterByOrigin === 'data base') {
+      return isNaN(pokemon.id);
+    } else if (filterByOrigin === 'api') {
+      return pokemon.id <= 100;
+    } else {
+      return true;
+    }
+  });
   
   const sortedPokemons = filteredByOriginPokemons.sort((a, b) => {
-    if (orderBy === "name") {
+    if (orderByName === "name") {
       if (order === "asc") {
         return a.name.localeCompare(b.name);
       } else {
         return b.name.localeCompare(a.name);
       }
-    } else if (orderBy === "attack") {
+    } 
+  });
+
+  const sortedByAttack = sortedPokemons.sort((a, b) => {
+    if (orderByAttack === "attack") {
       if (order === "asc") {
-        return a.stats.attack - b.stats.attack;
+        return a.attack - b.attack;
       } else {
-        return b.stats.attack - a.stats.attack;
+        return b.attack - a.attack;
       }
     } else {
       return 0;
     }
-  });
+  })
 
-  const currentCharacters = sortedPokemons.slice(indexOfFirstCharacter, indexOfLastCharacter);
+  const currentCharacters = sortedByAttack.slice(indexOfFirstCharacter, indexOfLastCharacter);
   
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -74,6 +79,7 @@ const CardsContainer = () => {
                           image={pokemon.image}
                           name={pokemon.name}
                           types={pokemon.types}
+                          attack={pokemon.attack}
                       />
                   </div>
               )

@@ -7,7 +7,8 @@ export const SEARCH_POKEMON = 'SEARCH_POKEMON';
 export const GET_TYPES = 'GET_TYPES';
 export const FILTER_BY_TYPES = 'FILTER_BY_TYPES';
 export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
-export const SET_ORDER = "SET_ORDER";
+export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
+export const SET_ATTACK = "SET_ATTACK";
 
 export const getPokemons = () => {
   return async function (dispatch) {
@@ -32,24 +33,6 @@ export const getPokemonDetails = (id) => {
     }
   };
 };
-
-// export const getPokemonDetails = (id) => {
-//   return (dispatch) => {
-//     fetch(`http://localhost:3001/pokemon/${id}`)
-//       .then((response) => response.json())
-//       .then((data) => dispatch({ type: GET_DETAILS, payload: data }))
-//       .catch((error) => {
-//         return error
-//       });
-//   }
-// };
-      
-// export const getPokemonDetails = (id) => {
-//   return async (dispatch) => {
-//     const response = (await axios(`http://localhost:3001/pokemon/${id}`)).data;
-//     dispatch({ type: GET_DETAILS, payload: response });
-//   };
-// };
 
 export const searchPokemon = (name) => {
   return async (dispatch) => {
@@ -78,15 +61,24 @@ export const filterByTypes = (type) => {
 };
 
 export const filterByOrigin = (origin) => {
-  return {
-    type: FILTER_BY_ORIGIN,
-    payload: origin
+  return function (dispatch) {
+    dispatch({
+      type: FILTER_BY_ORIGIN,
+      payload: origin
+    })
   }
 };
 
-export const setOrder = (filter) => {
-  return {
-    type: SET_ORDER,
-    payload: filter,
+export const setOrder = (setOrder) => {
+  return function (dispatch) {
+    dispatch({ type: SET_ORDER_BY_NAME, payload: setOrder });
   };
 };
+
+export const setAttack = (setOrder) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_ATTACK, payload: setOrder
+    })
+  }
+}
