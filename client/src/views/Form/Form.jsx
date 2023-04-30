@@ -42,7 +42,7 @@ const CreatePokemon = () => {
 
     const validate = (input) => {
         const errors = {};
-        if (input.name.length < 4) {
+        if (input.name !== "") {
             errors.name = 'Name must have at least 4 characters';
         }
         if (!input.image) {
@@ -66,7 +66,7 @@ const CreatePokemon = () => {
         if (input.speed < 0 || input.speed > 200) {
             errors.speed = 'Speed must be between 1 and 200';
         }
-        if (input.types.length === 0) {
+        if (input.types !== []) {
             errors.types = 'Select at least one Pokemon type';
         } else {
             errors.types = '';
@@ -112,7 +112,6 @@ const CreatePokemon = () => {
             alert("Seleccione al menos un tipo de pokemon antes de continuar")
         }
     };
-    
     
     return (
         <div className={style.container}>
@@ -259,29 +258,28 @@ const CreatePokemon = () => {
 
 export default CreatePokemon;
 
-
-// {allFieldsValid() && ()}
+// {allFieldsValid() && (
+//             )}
 // const allFieldsValid = () => {
-//     return (
-//         input.name !== "" &&
-//         input.hp !== 0 &&
-//         input.attack !== 0 &&
-//         input.defense !== 0 &&
-//         input.speed !== 0 &&
-//         input.height !== 0 &&
-//         input.weight !== 0 &&
-//         input.image !== "" &&
-//         selectedTypes.length > 0 && 
-//         input.types.length <= 2 &&
-//         console.log(input.types) &&
-//         error.name === "" &&
-//         error.hp === "" &&
-//         error.attack === "" &&
-//         error.defense === "" &&
-//         error.speed === "" &&
-//         error.height === "" &&
-//         error.weight === "" && 
-//         error.image === "" &&
-//         (!error.types || error.types === "")
-//     )
+// return (
+//     input.name !== "" &&
+//     input.hp !== 0 &&
+//     input.attack !== 0 &&
+//     input.defense !== 0 &&
+//     input.speed !== 0 &&
+//     input.height !== 0 &&
+//     input.weight !== 0 &&
+//     input.image !== "" &&
+//     input.types !== [] && 
+//     error.name === "" &&
+//     error.hp === 0 &&
+//     error.attack === 0 &&
+//     error.defense === 0 &&
+//     error.speed === 0 &&
+//     error.height === 0 &&
+//     error.weight === 0 && 
+//     error.image === "" &&
+//     (!error.types || error.types === [])
+// )
 // };
+

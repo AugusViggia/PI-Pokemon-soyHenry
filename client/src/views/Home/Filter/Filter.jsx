@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTypes, filterByTypes, filterByOrigin, setOrder, getPokemons} from "../../../redux/actions";
+import { getTypes, filterByTypes, filterByOrigin, setOrder, getPokemons, setAttack} from "../../../redux/actions";
 import style from './Filter.module.css';
 
 const Filter = () => {
@@ -39,10 +39,10 @@ const Filter = () => {
         const [orderByValue, orderValue] = event.target.value.split('-');
 
         if (event.target.value === 'all') {
-            dispatch(setOrder({ orderByAttack: null, order: null }));
+            dispatch(setAttack({ orderByAttack: null, order: null }));
             dispatch(getPokemons()); // obtener los pokemons nuevamente
         } else {
-            dispatch(setOrder({ orderByAttack: 'attack', order: orderValue }));
+            dispatch(setAttack({ orderByAttack: 'attack', order: orderValue }));
         }
     }
 

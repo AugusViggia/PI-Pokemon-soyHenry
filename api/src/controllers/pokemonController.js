@@ -78,7 +78,7 @@ const getAllPokemons = async () => {
     });
 
     const apiPokemonsRaw = (
-        await axios(`${API_URL}/pokemon?limit=80`)
+        await axios(`${API_URL}/pokemon?limit=150`)
     );
 
     const pokemonUrls = apiPokemonsRaw.data?.results.map(

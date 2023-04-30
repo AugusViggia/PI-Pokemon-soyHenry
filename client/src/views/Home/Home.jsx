@@ -23,10 +23,12 @@ const Home = () => {
 
     return (
         <div className={style.home}>
-            <h2 className={style.pokedex}>POKEDEX!</h2>
-            <Link to="/form" className={style.buttonForm}>POKEMON CREATOR</Link>
+            <h2 className={style.pokedex}>PokéDeX</h2>
+            <div className={style.navBar}>
+                <SearchBar onSearch={handleSearch}/>
+                <Link to="/form" className={style.buttonForm}>PokéMoN CREATOR</Link>
+            </div>
             <Filter/>
-            <SearchBar onSearch={handleSearch}/>
             {loading ? (
                 <Loading />
             ) : (

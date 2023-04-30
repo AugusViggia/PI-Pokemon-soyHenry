@@ -6,10 +6,10 @@ const Landing = () => {
     return (
         <div className={style.container}>
             <div className={style.title}>
-                <h1>POKEMON APP</h1>
+                <p>PokéDeX APP</p>
             </div>
             <div className={style.linkList}>
-                <Link className={style.button} to='/home'>POKEDEX</Link>
+                <Link className={style.button} to='/home'>POWER</Link>
             </div>
         </div>
     )

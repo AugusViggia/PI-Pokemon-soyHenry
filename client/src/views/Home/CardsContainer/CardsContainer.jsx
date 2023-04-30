@@ -22,14 +22,14 @@ const CardsContainer = () => {
     setCurrentPage(pageNumber)
   };
 
-const filteredPokemons = pokemons.filter(pokemon => {
-  if (filterByType === 'all') {
-    return true;
-  } else {
-    const types = [...pokemon.types, ...pokemon.types.map(type => type.name)];
-    return types.includes(filterByType);
-  }
-});
+  const filteredPokemons = pokemons.filter(pokemon => {
+    if (filterByType === 'all') {
+      return true;
+    } else {
+      const types = [...pokemon.types, ...pokemon.types.map(type => type.name)];
+      return types.includes(filterByType);
+    }
+  });
 
   const filteredByOriginPokemons = filterByOrigin === 'all'
   ? filteredPokemons
@@ -71,7 +71,7 @@ const filteredPokemons = pokemons.filter(pokemon => {
     <div className={style.cardsContainer}>
       <div className={style.pageDiv}>
         <Page charactersPerPage={charactersPerPage}
-              pokemons={pokemons.length}
+              pokemons={filteredByOriginPokemons}
               paginated={paginated}
         />
       </div>
