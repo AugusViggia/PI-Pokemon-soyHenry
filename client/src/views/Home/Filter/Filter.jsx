@@ -50,7 +50,7 @@ const Filter = () => {
         <div className={style.filterContainer}>
             <div className={style.filter}>
                 <label htmlFor="type" className={style.typeFilter}>Filter by Type: </label>
-                <select defaultValue={filter} onChange={handleChange} className={style.select}>
+                <select defaultValue="all" onChange={handleChange} className={style.select}>
                     <option value="all">--</option>
                     {pokemonTypes?.map(type => {
                         return <option
@@ -63,7 +63,7 @@ const Filter = () => {
             </div>
             <div className={style.filter}>
                 <label htmlFor="origin" className={style.originFilter}>Filter by Origin: </label>
-                <select defaultValue={origin} onChange={handleOrigin} className={style.select}>
+                <select defaultValue="all" onChange={handleOrigin} className={style.select}>
                     <option value='all' className={style.option}>--</option>
                     <option value='data base' className={style.option}>Data Base</option>
                     <option value='api' className={style.option}>API</option>

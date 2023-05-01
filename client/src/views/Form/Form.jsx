@@ -259,6 +259,7 @@ const CreatePokemon = () => {
 export default CreatePokemon;
 
 // {allFieldsValid() && (
+    
 //             )}
 // const allFieldsValid = () => {
 // return (

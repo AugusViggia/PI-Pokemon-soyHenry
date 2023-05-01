@@ -1,10 +1,12 @@
 import Card from '../Cards/Cards';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 import Page from '../Paginated/Page';
 import style from './CardsContainer.module.css';
+import { resetFilterByAttack, resetFilterByName, resetFilterByOrigin, resetFilterByType, resetOrder } from '../../../redux/actions';
 
 const CardsContainer = () => {
+  const dispatch = useDispatch();
   const pokemons = useSelector(state => state.pokemons);
 
   const filterByType = useSelector(state => state.filterByType);
@@ -17,61 +19,80 @@ const CardsContainer = () => {
   const [charactersPerPage, setcharactersPerPage] = useState(12);
   const indexOfLastCharacter = currentPage * charactersPerPage;
   const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
+  const [filteredPokemons, setFilteredPokemons] = useState([]);
   
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber)
   };
 
-  const filteredPokemons = pokemons.filter(pokemon => {
-    if (filterByType === 'all') {
-      return true;
-    } else {
-      const types = [...pokemon.types, ...pokemon.types.map(type => type.name)];
-      return types.includes(filterByType);
-    }
-  });
-
-  const filteredByOriginPokemons = filterByOrigin === 'all'
-  ? filteredPokemons
-  : filteredPokemons.filter(pokemon => {
-    if (filterByOrigin === 'data base') {
-      return isNaN(pokemon.id);
-    } else if (filterByOrigin === 'api') {
-      return pokemon.id <= 100;
-    } else {
-      return true;
-    }
-  });
+  useEffect(() => {
+    dispatch(resetFilterByType('all'));
+    dispatch(resetFilterByOrigin('all'));
+    dispatch(resetFilterByName('all'));
+    dispatch(resetFilterByAttack('all'));
+    dispatch(resetOrder('asc'));
+  }, [dispatch]);
   
-  const sortedPokemons = filteredByOriginPokemons.sort((a, b) => {
-    if (orderByName === "name") {
-      if (order === "asc") {
-        return a.name.localeCompare(b.name);
+  useEffect(() => {
+    const filteredPokemons = pokemons.filter(pokemon => {
+      if (filterByType === 'all') {
+        return true;
       } else {
-        return b.name.localeCompare(a.name);
+        const types = [...pokemon.types, ...pokemon.types.map(type => type.name)];
+        return types.includes(filterByType);
       }
-    } 
-  });
+    });
 
-  const sortedByAttack = sortedPokemons.sort((a, b) => {
-    if (orderByAttack === "attack") {
-      if (order === "asc") {
-        return a.attack - b.attack;
+    const filteredByOriginPokemons = filterByOrigin === 'all'
+      ? filteredPokemons
+      : filteredPokemons.filter(pokemon => {
+          if (filterByOrigin === 'data base') {
+            return isNaN(pokemon.id);
+          } else if (filterByOrigin === 'api') {
+            return pokemon.id <= 100;
+          } else {
+            return true;
+          }
+      });
+
+    const sortedPokemons = filteredByOriginPokemons.sort((a, b) => {
+      if (orderByName === "name") {
+        if (order === "asc") {
+          return a.name.localeCompare(b.name);
+        } else {
+          return b.name.localeCompare(a.name);
+        }
+      } 
+    }).sort((a, b) => {
+      if (orderByAttack === "attack") {
+        if (order === "asc") {
+          return a.attack - b.attack;
+        } else {
+          return b.attack - a.attack;
+        }
       } else {
-        return b.attack - a.attack;
+        return 0;
       }
-    } else {
-      return 0;
+    });
+
+    setFilteredPokemons(sortedPokemons);
+  }, [pokemons, filterByType, filterByOrigin, orderByName, orderByAttack, order]);
+
+
+  const currentCharacters = filteredPokemons.slice(indexOfFirstCharacter, indexOfLastCharacter);
+
+    useEffect(() => {
+    if (currentCharacters.length === 0 && filteredPokemons.length > 0) {
+      const newPage = Math.ceil(filteredPokemons.length / charactersPerPage);
+      setCurrentPage(newPage);
     }
-  });
-
-  const currentCharacters = sortedByAttack.slice(indexOfFirstCharacter, indexOfLastCharacter);
+  }, [currentCharacters, filteredPokemons, charactersPerPage]);
 
   return (
     <div className={style.cardsContainer}>
       <div className={style.pageDiv}>
         <Page charactersPerPage={charactersPerPage}
-              pokemons={filteredByOriginPokemons}
+              pokemons={filteredPokemons}
               paginated={paginated}
         />
       </div>

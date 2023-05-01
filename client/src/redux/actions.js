@@ -10,6 +10,11 @@ export const FILTER_BY_ORIGIN = 'FILTER_BY_ORIGIN';
 export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
 export const SET_ATTACK = "SET_ATTACK";
 export const SET_LOADING = "SET_LOADING";
+export const RESET_FILTER_BY_TYPE = "RESET_FILTER_BY_TYPE";
+export const RESET_FILTER_BY_ORIGIN = "RESET_FILTER_BY_ORIGIN";
+export const RESET_ORDER_BY_NAME = "RESET_ORDER_BY_NAME";
+export const RESET_ORDER_BY_ATTACK = "RESET_ORDER_BY_ATTACK";
+export const RESET_ORDER = "RESET_ORDER";
 
 export const getPokemons = () => {
   return async function (dispatch) {
@@ -88,3 +93,38 @@ export const setLoading = (value) => ({
   type: SET_LOADING,
   payload: value,
 });
+
+export const resetFilterByType = (type) => {
+  return {
+    type: RESET_FILTER_BY_TYPE,
+    payload: type,
+  };
+};
+
+export const resetFilterByOrigin = (origin) => {
+  return {
+    type: RESET_FILTER_BY_ORIGIN,
+    payload: origin,
+  };
+};
+
+export const resetFilterByName = (name) => {
+  return {
+    type: RESET_ORDER_BY_NAME,
+    payload: name,
+  };
+};
+
+export const resetFilterByAttack = (attack) => {
+  return {
+    type: RESET_ORDER_BY_ATTACK,
+    payload: attack,
+  };
+};
+
+export const resetOrder = (order) => {
+  return {
+    type: RESET_ORDER,
+    payload: order,
+  };
+};

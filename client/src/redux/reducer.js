@@ -7,7 +7,12 @@ import {
   FILTER_BY_ORIGIN,
   SET_ORDER_BY_NAME,
   SET_ATTACK,
-  SET_LOADING
+  SET_LOADING,
+  RESET_FILTER_BY_TYPE,
+  RESET_FILTER_BY_ORIGIN,
+  RESET_ORDER_BY_NAME,
+  RESET_ORDER_BY_ATTACK,
+  RESET_ORDER
 } from "./actions";
 
 const initialState = {
@@ -81,11 +86,41 @@ const reducer = (state = initialState, action) => {
               ...state,
               filterByOrigin: action.payload,
             };
-          
-          case SET_LOADING: 
+
+          case SET_LOADING:
             return {
               ...state,
               loading: action.payload,
+            };
+
+          case RESET_FILTER_BY_TYPE:
+            return {
+              ...state,
+              filterByType: action.payload
+            };
+          
+          case RESET_FILTER_BY_ORIGIN:
+            return {
+              ...state,
+              filterByOrigin: action.payload
+            };
+          
+          case RESET_ORDER_BY_NAME:
+            return {
+              ...state,
+              orderByName: action.payload
+            };
+          
+          case RESET_ORDER_BY_ATTACK:
+            return {
+              ...state,
+              orderByAttack: action.payload
+            }
+
+          case RESET_ORDER:
+            return {
+              ...state,
+              order: action.payload
             };
 
           default:

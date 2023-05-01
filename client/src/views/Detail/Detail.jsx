@@ -1,5 +1,5 @@
 import { getPokemonDetails } from "../../redux/actions";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from "react-router-dom";
 import style from './Detail.module.css';
@@ -9,6 +9,7 @@ const Detail = () => {
     const { id } = useParams();
     const pokemonDetails = useSelector((state) => state.details);
     const isLoading = useSelector((state) => state.isLoading);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -18,10 +19,24 @@ const Detail = () => {
 
     const pokemonDetailsArray = Array.isArray(pokemonDetails) ? pokemonDetails : [pokemonDetails];
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setImageLoaded(true);
+            }, 1200);
+
+        return () => {
+            clearTimeout(timeoutId);
+            };
+    }, []);
+
+    const handleImageLoad = () => {
+        setImageLoaded(true);
+    };
+
     return (
         <div className={style.container}>
-            {isLoading && <Loading />}
-            {!isLoading && (
+            {(!imageLoaded || isLoading) && <Loading />}
+            {!isLoading && imageLoaded &&(
                 <>
                     <div className={style.buttonDiv}>
                         <Link to="/home" className={style.button}>
@@ -34,7 +49,8 @@ const Detail = () => {
                         </div>
                         <div className={style.infoDiv}>
                         <div className={style.imageDiv}>
-                            <img  src={pokemonDetailsArray[0]?.image} alt="Image not found" className={style.image}/>
+                                <img src={pokemonDetailsArray[0]?.image} alt="Image not found" className={style.image}
+                                onLoad={handleImageLoad}/>
                         </div>
                             <div className={style.details}>
                                 <div className={style.grid}>
@@ -79,6 +95,5 @@ const Detail = () => {
         </div>
     )
 };
-
 
 export default Detail;
