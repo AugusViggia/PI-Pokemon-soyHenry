@@ -33,6 +33,8 @@ const Detail = () => {
         setImageLoaded(true);
     };
 
+    const capitalizedName = pokemonDetailsArray[0]?.name ? pokemonDetailsArray[0]?.name.charAt(0).toUpperCase() + pokemonDetailsArray[0]?.name.slice(1) : '';
+
     return (
         <div className={style.container}>
             {(!imageLoaded || isLoading) && <Loading />}
@@ -45,7 +47,7 @@ const Detail = () => {
                     </div>
                     <div className={style.wrapper}>
                         <div className={style.nameDiv}>
-                            <p className={style.name}>{pokemonDetailsArray[0]?.name}</p>
+                            <p className={style.name}>{capitalizedName}</p>
                         </div>
                         <div className={style.infoDiv}>
                         <div className={style.imageDiv}>

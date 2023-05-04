@@ -18,6 +18,12 @@
     margin-bottom: 20px;
 }
 
+.pageDiv{
+    margin-bottom: 15px;
+    width: fit-content;
+    align-self: center;
+}
+
 @media only screen and (max-width: 768px) {
     .cardDiv {
         flex: 0 0 100%;

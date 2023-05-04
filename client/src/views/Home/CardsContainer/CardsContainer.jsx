@@ -97,20 +97,22 @@ const CardsContainer = () => {
         />
       </div>
       <div className={style.cards}>
-          {currentCharacters?.map(pokemon => {
-              return (
-                  <div key={pokemon.id} className={style.cardDiv}>
-                      <Card
-                          key={pokemon.id}
-                          id={pokemon.id}
-                          image={pokemon.image}
-                          name={pokemon.name}
-                          types={pokemon.types}
-                          attack={pokemon.attack}
-                      />
-                  </div>
-              )
-          })}
+        {currentCharacters?.map(pokemon => {
+          const capitalizedFirstLetter = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+
+          return (
+              <div key={pokemon.id} className={style.cardDiv}>
+                  <Card
+                      key={pokemon.id}
+                      id={pokemon.id}
+                      image={pokemon.image}
+                      name={capitalizedFirstLetter}
+                      types={pokemon.types}
+                      attack={pokemon.attack}
+                  />
+              </div>
+          )
+        })}
       </div>
     </div>
   )

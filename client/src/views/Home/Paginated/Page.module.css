@@ -11,15 +11,21 @@
 }
 
 .paginado a {
-    color: #333;
+    color: #353b48;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding: 0.5rem;
-    text-decoration: none;
+    text-decoration: solid;
     transition: all 0.3s ease;
 }
 
 .paginado a:hover {
-    background-color: #f2f2f2;
+    background-color: #fbc531;
     color: #fff;
+}
+
+.currentPage {
+    background-color: #f9ca24;
+    font-weight: bold;
+    border-radius: 3px;
 }

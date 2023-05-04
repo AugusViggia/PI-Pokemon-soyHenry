@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import style from './Form.module.css';
-
+import { useHistory } from 'react-router-dom';
 
 const CreatePokemon = () => {
     const [selectedTypes, setSelectedTypes] = useState([]);
 
     const types = useSelector((state) => state.types);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getTypes());
@@ -39,51 +40,29 @@ const CreatePokemon = () => {
         speed: '',
         types: ''
     });
-
-    const validate = (input) => {
-        const errors = {};
-        if (input.name !== "") {
-            errors.name = 'Name must have at least 4 characters';
-        }
-        if (!input.image) {
-            errors.image = 'Image is required';
-        }
-        if (input.hp < 0 || input.hp > 200) {
-            errors.hp = 'HP must be between 1 and 200';
-        }
-        if (input.height < 0 || input.height > 50) {
-            errors.height = 'Height must be between 1 and 50';
-        }
-        if (input.weight < 0 || input.weight > 1000) {
-            errors.weight = 'Weight must be between 1 and 1000';
-        }
-        if (input.attack < 0 || input.attack > 200) {
-            errors.attack = 'Attack must be between 1 and 200';
-        }
-        if (input.defense < 0 || input.defense > 200) {
-            errors.defense = 'Defense must be between 1 and 200';
-        }
-        if (input.speed < 0 || input.speed > 200) {
-            errors.speed = 'Speed must be between 1 and 200';
-        }
-        if (input.types !== []) {
-            errors.types = 'Select at least one Pokemon type';
-        } else {
-            errors.types = '';
-        }
-        setError(errors);
-        return Object.keys(errors).length === 0;
+    
+    const allFieldsValid = () => {
+        return (
+            input.name.trim().length >= 4 &&
+            input.hp >= 1 && input.hp <= 999 &&
+            input.attack >= 1 && input.attack <= 999 &&
+            input.defense >= 1 && input.defense <= 999 &&
+            input.speed >= 1 && input.speed <= 999 &&
+            input.height >= 1 && input.height <= 999 &&
+            input.weight >= 1 && input.weight <= 999 &&
+            input.image.trim() !== "" &&
+            input.types.length > 0 &&
+            error.name === "" &&
+            Object.values(error).every(val => val === "")
+        );
     };
     
     const handleChange = (event) => {
-        setInput({
-            ...input,
-            [event.target.name]: event.target.value
-        });
-        validate({
-            ...input,
-            [event.target.name]: event.target.value
-        })
+        const { name, value } = event.target;
+        setInput((prevInput) => ({
+            ...prevInput,
+            [name]: value
+        }));
     };
     
     const handleCheck = (event) => {
@@ -104,22 +83,39 @@ const CreatePokemon = () => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (input.types.length) {
-            axios.post("http://localhost:3001/pokemon/post", input)
-            .then(alert("Pokemon creado correctamente"))
-            .catch(err => alert(err));
+
+        if (allFieldsValid()) {
+            try {
+                const response = await axios.get(`http://localhost:3001/pokemon?name=${input.name}`);
+                if (response.data.length > 0) {
+                    alert(`Pokemon ${input.name} already exists.`);
+                    return;
+                };
+            } catch (error) {
+                alert(`Verification error: ${error.message}`);
+                return;
+            };
+
+            try {
+                await axios.post("http://localhost:3001/pokemon/post", input);
+                alert("Pokemon was creaated.");
+                history.push('/home');
+            } catch (error) {
+                console.error(error);
+                alert(`Creation error: ${error.message}`);
+            };
         } else {
-            alert("Seleccione al menos un tipo de pokemon antes de continuar")
+            alert("Select at least one type.");
         }
     };
-    
+
     return (
         <div className={style.container}>
             <div className={style.buttonDiv}>
                 <Link to="/home" className={style.buttonBack}>BACK</Link>
             </div>
-            <form onSubmit={handleSubmit} className={style.form}>
-                <h3 className={style.title}>POKEMON CREATOR</h3>
+            <form method="POST" onSubmit={handleSubmit} className={style.form}>
+                <p className={style.title}>PoKéMoN! CREATOR</p>
                 <div className={style.formGroup}>
                     <label htmlFor="name">Name:</label>
                     <input
@@ -129,7 +125,7 @@ const CreatePokemon = () => {
                         value={input.name}
                         onChange={handleChange}
                         className={error.name ? 'form-control is-invalid' : 'form-control'}
-                        />
+                        placeholder="write a name..."/>
                     <span className={style.invalidFeedback}>{error.name}</span>
                 </div>
                 <div className={style.formGroup}>
@@ -141,7 +137,7 @@ const CreatePokemon = () => {
                         value={input.image}
                         onChange={handleChange}
                         className={error.image ? 'form-control is-invalid' : 'form-control'}
-                        />
+                        placeholder="it has to be .png/.jpg"/>
                     <span className={style.invalidFeedback}>{error.image}</span>
                 </div>
                 <div className={style.formGroup}>
@@ -228,59 +224,36 @@ const CreatePokemon = () => {
                         />
                     <span className={style.invalidFeedback}>{error.speed}</span>
                 </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="types">Types:</label>
-                    {types?.map((type) => {
-                        return (
-                            <div key={type.id}>
-                                <label>
-                                    {type.name}
-                                </label>
-                                <input
-                                    type="checkbox"
-                                    name="types"
-                                    value={type.id}
-                                    onChange={handleCheck}
-                                    checked={selectedTypes.includes(type.id)}
-                                    />
-                            </div>
-                        );
-                    })}
+                <div className="{style.formGroup}">
+                    <label htmlFor="types" className={style.checkBoxTitle}>Types:</label>
+                    <div className={style.checkBoxDiv}>
+                        {types?.map((type) => {
+                            return (
+                                <div key={type.id} >
+                                    <label>
+                                        {type.name}
+                                    </label>
+                                    <input
+                                        type="checkbox"
+                                        name="types"
+                                        value={type.id}
+                                        onChange={handleCheck}
+                                        checked={selectedTypes.includes(type.id)}
+                                        />
+                                </div>
+                            );
+                        })}
+                    </div>
                     <div className={style.invalidFeedback}>{error.types}</div>
                 </div>
+                {allFieldsValid() && (
                     <button type="submit" onClick={handleSubmit}>
                         CREATE POKEMON
                     </button>
+                )}
             </form>
         </div>
     );
 };
 
 export default CreatePokemon;
-
-// {allFieldsValid() && (
-    
-//             )}
-// const allFieldsValid = () => {
-// return (
-//     input.name !== "" &&
-//     input.hp !== 0 &&
-//     input.attack !== 0 &&
-//     input.defense !== 0 &&
-//     input.speed !== 0 &&
-//     input.height !== 0 &&
-//     input.weight !== 0 &&
-//     input.image !== "" &&
-//     input.types !== [] && 
-//     error.name === "" &&
-//     error.hp === 0 &&
-//     error.attack === 0 &&
-//     error.defense === 0 &&
-//     error.speed === 0 &&
-//     error.height === 0 &&
-//     error.weight === 0 && 
-//     error.image === "" &&
-//     (!error.types || error.types === [])
-// )
-// };
-
