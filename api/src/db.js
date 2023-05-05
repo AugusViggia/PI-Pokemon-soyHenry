@@ -13,7 +13,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DATABASE_URL} = process.env;
 // );
 
 const sequelize = new Sequelize(
-   DATABASE_URL,
+'postgresql://postgres:jQwuAZhdW6Lgs7OpvkCb@containers-us-west-150.railway.app:7734/railway',
   {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
