@@ -5,8 +5,6 @@ import style from './Filter.module.css';
 
 const Filter = () => {
     const pokemonTypes = useSelector((state) => state.types);
-    const filter = useSelector((state) => state.filterByType);
-    const origin = useSelector((state) => state.filterByOrigin);
 
     const dispatch = useDispatch();
 

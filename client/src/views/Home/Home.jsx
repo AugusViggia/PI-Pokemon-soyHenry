@@ -25,10 +25,10 @@ const Home = () => {
         <div className={style.home}>
             <h2 className={style.pokedex}>PokeDeX!</h2>
             <div className={style.navBar}>
-                <SearchBar onSearch={handleSearch}/>
+                <SearchBar onSearch={handleSearch} />
                 <Link to="/form" className={style.buttonForm}>PokéMoN! CREATOR</Link>
             </div>
-            <Filter/>
+            <Filter />
             {loading ? (
                 <Loading />
             ) : (

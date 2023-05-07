@@ -120,3 +120,45 @@
 .typeList{
     align-items: center;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .container {
+        height: auto;
+        padding-top: 30px;
+    }
+
+    .wrapper {
+        width: 90%;
+        margin-bottom: 30px;
+    }
+
+    .infoDiv {
+        flex-direction: column;
+    }
+
+    .nameDiv {
+        margin-bottom: 10px;
+    }
+
+    .imageDiv {
+        width: 95%;
+        margin-left: 0;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .details {
+        grid-template-columns: 1fr;
+    }
+
+    .grid {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .types {
+        width: 90%;
+        margin: 0 auto;
+    }
+}

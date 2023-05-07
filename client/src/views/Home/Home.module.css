@@ -17,12 +17,13 @@
     margin-bottom: 10px;
 }
 
-.navBar{
+.navBar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 15px;
+    max-width: 800px;
 }
 
 .buttonForm {
@@ -47,24 +48,19 @@
     background-color: #f9ca24;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .pokedex {
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
-    .buttonBack {
-        font-size: 1rem;
+    .buttonForm {
+        font-size: 14px;
         padding: 0.8rem 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .pokedex {
-        font-size: 2rem;
+        margin-top: 5px;
     }
 
-    .buttonBack {
-        font-size: 0.8rem;
-        padding: 0.5rem 1rem;
+    .navBar {
+        flex-direction: column;
+        align-items: center;
     }
 }

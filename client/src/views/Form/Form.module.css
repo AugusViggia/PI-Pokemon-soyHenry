@@ -109,3 +109,40 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+@media only screen and (max-width: 600px) {
+    .form {
+        padding: 5px;
+        width: 365px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .formGroup {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        font-size: 12px;
+        padding: 5px;
+        margin-left: 0;
+        width: 340px;
+    }
+
+    .checkBoxTitle {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .checkBoxDiv {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+}

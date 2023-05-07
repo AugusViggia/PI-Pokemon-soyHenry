@@ -49,7 +49,7 @@ const CardsContainer = () => {
           if (filterByOrigin === 'data base') {
             return isNaN(pokemon.id);
           } else if (filterByOrigin === 'api') {
-            return pokemon.id <= 100;
+            return pokemon.id <= 1200;
           } else {
             return true;
           }

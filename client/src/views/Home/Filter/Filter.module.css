@@ -43,3 +43,16 @@
 .attackFilter {
     width: 150px;
 }
+
+@media (max-width: 768px) {
+    .filterContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 7px;
+    }
+
+    .filter {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}

@@ -5,9 +5,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import style from './Form.module.css';
 import { useHistory } from 'react-router-dom';
+import Loading from "../Home/Loading/Loading";
 
 const CreatePokemon = () => {
     const [selectedTypes, setSelectedTypes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const types = useSelector((state) => state.types);
     const dispatch = useDispatch();
@@ -15,6 +17,7 @@ const CreatePokemon = () => {
 
     useEffect(() => {
         dispatch(getTypes());
+        setLoading(false)
     }, []);
 
     const [input, setInput] = useState({
@@ -114,144 +117,149 @@ const CreatePokemon = () => {
             <div className={style.buttonDiv}>
                 <Link to="/home" className={style.buttonBack}>BACK</Link>
             </div>
-            <form method="POST" onSubmit={handleSubmit} className={style.form}>
-                <p className={style.title}>PoKéMoN! CREATOR</p>
-                <div className={style.formGroup}>
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={input.name}
-                        onChange={handleChange}
-                        className={error.name ? 'form-control is-invalid' : 'form-control'}
-                        placeholder="write a name..."/>
-                    <span className={style.invalidFeedback}>{error.name}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="image">Image:</label>
-                    <input
-                        type="text"
-                        id="image"
-                        name="image"
-                        value={input.image}
-                        onChange={handleChange}
-                        className={error.image ? 'form-control is-invalid' : 'form-control'}
-                        placeholder="it has to be .png/.jpg"/>
-                    <span className={style.invalidFeedback}>{error.image}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="hp">Hp:</label>
-                    <input
-                        type="number"
-                        id="hp"
-                        name="hp"
-                        min="0"
-                        max="999"
-                        value={input.hp}
-                        onChange={handleChange}
-                        className={error.hp ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.hp}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="height">Height:</label>
-                    <input
-                        type="number"
-                        id="height"
-                        name="height"
-                        min="0"
-                        max="999"
-                        value={input.height}
-                        onChange={handleChange}
-                        className={error.height ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.height}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="weight">Weight:</label>
-                    <input
-                        type="number"
-                        id="weight"
-                        name="weight"
-                        min="0"
-                        max="999"
-                        value={input.weight}
-                        onChange={handleChange}
-                        className={error.weight ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.weight}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="attack">Attack:</label>
-                    <input
-                        type="number"
-                        id="attack"
-                        name="attack"
-                        min="0"
-                        max="999"
-                        value={input.attack}
-                        onChange={handleChange}
-                        className={error.attack ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.attack}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="defense">Defense:</label>
-                    <input
-                        type="number"
-                        id="defense"
-                        name="defense"
-                        min="0"
-                        max="999"
-                        value={input.defense}
-                        onChange={handleChange}
-                        className={error.defense ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.defense}</span>
-                </div>
-                <div className={style.formGroup}>
-                    <label htmlFor="speed">Speed:</label>
-                    <input
-                        type="number"
-                        id="speed"
-                        name="speed"
-                        min="0"
-                        max="999"
-                        value={input.speed}
-                        onChange={handleChange}
-                        className={error.speed ? 'form-control is-invalid' : 'form-control'}
-                        />
-                    <span className={style.invalidFeedback}>{error.speed}</span>
-                </div>
-                <div className="{style.formGroup}">
-                    <label htmlFor="types" className={style.checkBoxTitle}>Types:</label>
-                    <div className={style.checkBoxDiv}>
-                        {types?.map((type) => {
-                            return (
-                                <div key={type.id} >
-                                    <label>
-                                        {type.name}
-                                    </label>
-                                    <input
-                                        type="checkbox"
-                                        name="types"
-                                        value={type.id}
-                                        onChange={handleCheck}
-                                        checked={selectedTypes.includes(type.id)}
-                                        />
-                                </div>
-                            );
-                        })}
+            {loading || types.length < 20? (
+                <Loading/>
+            ) : 
+                (
+                    <form method="POST" onSubmit={handleSubmit} className={style.form}>
+                    <p className={style.title}>PoKéMoN! CREATOR</p>
+                    <div className={style.formGroup}>
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={input.name}
+                            onChange={handleChange}
+                            className={error.name ? 'form-control is-invalid' : 'form-control'}
+                            placeholder="write a name..."/>
+                        <span className={style.invalidFeedback}>{error.name}</span>
                     </div>
-                    <div className={style.invalidFeedback}>{error.types}</div>
-                </div>
-                {allFieldsValid() && (
-                    <button type="submit" onClick={handleSubmit}>
-                        CREATE POKEMON
-                    </button>
+                    <div className={style.formGroup}>
+                        <label htmlFor="image">Image:</label>
+                        <input
+                            type="text"
+                            id="image"
+                            name="image"
+                            value={input.image}
+                            onChange={handleChange}
+                            className={error.image ? 'form-control is-invalid' : 'form-control'}
+                            placeholder="it has to be .png/.jpg"/>
+                        <span className={style.invalidFeedback}>{error.image}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="hp">Hp:</label>
+                        <input
+                            type="number"
+                            id="hp"
+                            name="hp"
+                            min="0"
+                            max="999"
+                            value={input.hp}
+                            onChange={handleChange}
+                            className={error.hp ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.hp}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="height">Height:</label>
+                        <input
+                            type="number"
+                            id="height"
+                            name="height"
+                            min="0"
+                            max="999"
+                            value={input.height}
+                            onChange={handleChange}
+                            className={error.height ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.height}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="weight">Weight:</label>
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            min="0"
+                            max="999"
+                            value={input.weight}
+                            onChange={handleChange}
+                            className={error.weight ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.weight}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="attack">Attack:</label>
+                        <input
+                            type="number"
+                            id="attack"
+                            name="attack"
+                            min="0"
+                            max="999"
+                            value={input.attack}
+                            onChange={handleChange}
+                            className={error.attack ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.attack}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="defense">Defense:</label>
+                        <input
+                            type="number"
+                            id="defense"
+                            name="defense"
+                            min="0"
+                            max="999"
+                            value={input.defense}
+                            onChange={handleChange}
+                            className={error.defense ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.defense}</span>
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="speed">Speed:</label>
+                        <input
+                            type="number"
+                            id="speed"
+                            name="speed"
+                            min="0"
+                            max="999"
+                            value={input.speed}
+                            onChange={handleChange}
+                            className={error.speed ? 'form-control is-invalid' : 'form-control'}
+                            />
+                        <span className={style.invalidFeedback}>{error.speed}</span>
+                    </div>
+                    <div className="{style.formGroup}">
+                        <label htmlFor="types" className={style.checkBoxTitle}>Types:</label>
+                        <div className={style.checkBoxDiv}>
+                            {types?.map((type) => {
+                                return (
+                                    <div key={type.id} >
+                                        <label>
+                                            {type.name}
+                                        </label>
+                                        <input
+                                            type="checkbox"
+                                            name="types"
+                                            value={type.id}
+                                            onChange={handleCheck}
+                                            checked={selectedTypes.includes(type.id)}
+                                            />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className={style.invalidFeedback}>{error.types}</div>
+                    </div>
+                    {allFieldsValid() && (
+                        <button type="submit" onClick={handleSubmit}>
+                            CREATE POKEMON
+                        </button>
+                    )}
+                    </form>
                 )}
-            </form>
         </div>
     );
 };
