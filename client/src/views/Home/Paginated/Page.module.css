@@ -21,6 +21,7 @@
 
 .paginado a:hover {
     background-color: #fbc531;
+    border-radius: 4px;
     color: #fff;
 }
 
@@ -54,6 +55,6 @@
 
     .paginado a {
         font-size: 1.5rem;
-        padding: 1rem;
+        padding: 0.5rem;
     }
 }
