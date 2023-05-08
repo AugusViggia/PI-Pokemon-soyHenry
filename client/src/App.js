@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom';
 import Landing from './views/Landing Page/Landing';
 import Detail from './views/Detail/Detail';
 import CreatePokemon from './views/Form/Form';
+import axios from "axios";
+axios.defaults.baseURL = `http://localhost:3001/`;
 
 function App() {
   return (
