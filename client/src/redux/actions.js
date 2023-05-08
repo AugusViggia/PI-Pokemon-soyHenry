@@ -16,6 +16,8 @@ export const RESET_ORDER_BY_NAME = "RESET_ORDER_BY_NAME";
 export const RESET_ORDER_BY_ATTACK = "RESET_ORDER_BY_ATTACK";
 export const RESET_ORDER = "RESET_ORDER";
 
+
+
 export const getPokemons = () => {
   return async function (dispatch) {
     try {
