@@ -16,6 +16,7 @@ const CardsContainer = () => {
   const order = useSelector((state) => state.order);
 
   const [currentPage, setCurrentPage] = useState(1);
+  // eslint-disable-next-line
   const [charactersPerPage, setcharactersPerPage] = useState(12);
   const indexOfLastCharacter = currentPage * charactersPerPage;
   const indexOfFirstCharacter = indexOfLastCharacter - charactersPerPage;
@@ -55,6 +56,7 @@ const CardsContainer = () => {
           }
       });
 
+    // eslint-disable-next-line
     const sortedPokemons = filteredByOriginPokemons.sort((a, b) => {
       if (orderByName === "name") {
         if (order === "asc") {

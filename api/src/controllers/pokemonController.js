@@ -78,7 +78,7 @@ const getAllPokemons = async () => {
     });
 
     const apiPokemonsRaw = (
-        await axios(`${API_URL}/pokemon?limit=386`)
+        await axios(`${API_URL}/pokemon?limit=1281`)
     );
 
     const pokemonUrls = apiPokemonsRaw.data?.results.map(
@@ -97,6 +97,37 @@ const getAllPokemons = async () => {
     return [...dataBaseFiltered, ...apiPokemons];
 };
 
+const getPokemonByName = async (name) => {
+  let nameToLowerCase = name.toLowerCase();
+  const dataBasePokemons = await Pokemon.findAll({
+    where: {
+      name: { [Op.iLike]: `%${nameToLowerCase}%` },
+    },
+  });
+
+  const apiPokemonsRaw = (await axios(
+    `${API_URL}/pokemon?limit=1281&search=${nameToLowerCase}`
+  ));
+  
+  const pokemonUrls = apiPokemonsRaw.data?.results.map(
+    (pokemon) => pokemon.url
+    );
+    
+    const pokemonUrlRequests = pokemonUrls.map((url) => axios.get(url)); // haces un array de axios urls.
+    
+    const pokemonUrlResponses = await Promise.all(pokemonUrlRequests); // esperas a que lleguen todas las respuestas
+    
+    const pokemonData = pokemonUrlResponses.map((response) => response.data); // guardas toda la info que trajo axios en todo el recorrido
+
+    const apiPokemons = pokemonFilterForApi(pokemonData);
+    console.log(apiPokemons);
+    
+    const filteredInApi = apiPokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(nameToLowerCase));
+  //console.log(filteredInApi);
+  
+  return [...dataBasePokemons, ...filteredInApi];
+};
+
 const getPokemonById = async (id, source) => {
     const pokemon =
       source === "api"
@@ -110,33 +141,6 @@ const getPokemonById = async (id, source) => {
 
   return source === "api" ? pokemonFilterForApi([pokemon]) : pokemon;
 };
-
-const getPokemonByName = async (name) => {
-    let nameToLowerCase = name.toLowerCase();
-    const dataBasePokemons = await Pokemon.findAll({
-        where: {
-        name: { [Op.iLike]: `%${nameToLowerCase}%` },
-        },
-    });
-
-    const apiPokemonsRaw = (await axios(`${API_URL}/pokemon?search=${nameToLowerCase}`));
-
-    const pokemonUrls = apiPokemonsRaw.data?.results.map(
-        (pokemon) => pokemon.url
-    );
-    const pokemonUrlRequests = pokemonUrls.map((url) => axios.get(url)); // haces un array de axios urls.
-
-    const pokemonUrlResponses = await Promise.all(pokemonUrlRequests); // esperas a que lleguen todas las respuestas
-
-    const pokemonData = pokemonUrlResponses.map((response) => response.data); // guardas toda la info que trajo axios en todo el recorrido
-
-    const apiPokemons = pokemonFilterForApi(pokemonData);
-
-    const filteredInApi = apiPokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(nameToLowerCase));
-
-    return [...dataBasePokemons, ...filteredInApi];
-};
-
 module.exports = {
     getAllPokemons,
     getPokemonById,

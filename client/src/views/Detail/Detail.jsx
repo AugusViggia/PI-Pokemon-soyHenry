@@ -51,7 +51,7 @@ const Detail = () => {
                         </div>
                         <div className={style.infoDiv}>
                         <div className={style.imageDiv}>
-                                <img src={pokemonDetailsArray[0]?.image} alt="Image not found" className={style.image}
+                                <img src={pokemonDetailsArray[0]?.image} alt="" className={style.image}
                                 onLoad={handleImageLoad}/>
                         </div>
                             <div className={style.details}>

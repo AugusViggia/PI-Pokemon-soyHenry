@@ -31,8 +31,12 @@ const getPokemonByNameHandler = async (req, res) => {
 
     try {
         const pokemon = await getPokemonByName(name);
-        if (pokemon) res.status(OK).json(pokemon);
-        res.status(err).send('Pokemon not found, check your spelling');
+
+        if (pokemon.length > 0) {
+            res.status(OK).json(pokemon);
+        } else {
+            res.status(OK).json([]);
+        }
     } catch (error) {
         res.status(err).json({ error: error.message });
     }

@@ -18,7 +18,7 @@ const CreatePokemon = () => {
     useEffect(() => {
         dispatch(getTypes());
         setLoading(false)
-    }, []);
+    }, [dispatch]);
 
     const [input, setInput] = useState({
         name: '',
@@ -32,6 +32,7 @@ const CreatePokemon = () => {
         types: []
     });
 
+    // eslint-disable-next-line
     const [error, setError] = useState({
         name: '',
         image: '',
