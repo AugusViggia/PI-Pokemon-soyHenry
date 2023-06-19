@@ -19,7 +19,11 @@ export const RESET_ORDER = "RESET_ORDER";
 export const getPokemons = () => {
   return async function (dispatch) {
     try {
-      const response = (await axios(`/pokemon`)).data;
+      const response = (
+        await axios(
+          `https://soyhenry-pi-pokemon-production-b50b.up.railway.app/pokemon`
+        )
+      ).data;
 
       dispatch({ type: GET_POKEMONS, payload: response });
     } catch (error) {
@@ -31,8 +35,11 @@ export const getPokemons = () => {
 export const getPokemonDetails = (id) => {
   return async (dispatch) => {
     try {
-      const response = (await axios(`/pokemon/${id}`))
-        .data;
+      const response = (
+        await axios(
+          `https://soyhenry-pi-pokemon-production-b50b.up.railway.app/pokemon/${id}`
+        )
+      ).data;
       dispatch({ type: GET_DETAILS, payload: response });
     } catch (error) {
       alert("Error obtaining details.", error.message);
@@ -43,7 +50,11 @@ export const getPokemonDetails = (id) => {
 export const searchPokemon = (name) => {
   return async (dispatch) => {
     try {
-      const response = (await axios(`/pokemon/?name=${name}`)).data;
+      const response = (
+        await axios(
+          `https://soyhenry-pi-pokemon-production-b50b.up.railway.app/pokemon/?name=${name}`
+        )
+      ).data;
       dispatch({ type: SEARCH_POKEMON, payload: response });
     } catch (error) {
       alert(`${name} was not found in Pokemons.`, error.message);
@@ -54,7 +65,11 @@ export const searchPokemon = (name) => {
 export const getTypes = () => {
   return async (dispatch) => {
     try {
-      const response = (await axios(`/type`)).data
+      const response = (
+        await axios(
+          `https://soyhenry-pi-pokemon-production-b50b.up.railway.app/type`
+        )
+      ).data;
       dispatch({ type: GET_TYPES, payload: response });
     } catch (error) {
       alert("Error obtaining types", error.message);
